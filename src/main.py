@@ -27,9 +27,12 @@ class Main:
             print(vial)
 
     def run(self):
-        pass
+        move = Move(1, 4)
+        move(self.vials)
 
 if __name__ == "__main__":
     colors = 'bgkyyykkgbbgbykg'
     main = Main(colors)
+    main.showVials()
+    main()
     main.showVials()

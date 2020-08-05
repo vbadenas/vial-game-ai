@@ -31,7 +31,7 @@ class Vial:
         return msg
 
     def __repr__(self):
-        return str(self)
+        return str(self.__dict__)
 
     def addBall(self, ballColor):
         if len(self.balls) > 3:
@@ -39,9 +39,13 @@ class Vial:
         else:
             self.balls.append(ballColor)
 
-    def removeLastBall(self):
+    def popLastBall(self):
         if len(self.balls) > 0:
-            self.balls.pop()
+            return self.balls.pop()
+        return None
 
     def getLastBall(self):
         return self.balls[-1]
+
+    def __len__(self):
+        return len(self.balls)
