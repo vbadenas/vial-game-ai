@@ -20,15 +20,29 @@ class Main:
         self.vials[-1] = Vial([], (100*(numberOfVials), 50))
 
     def __call__(self, *args, **kwargs):
-        self.run(*args, **kwargs)
+        self.performMove(*args, **kwargs)
 
     def showVials(self):
         for vial in self.vials:
             print(vial)
 
-    def run(self):
+    def performMove(self):
+        origin, destination = self._inputValues()
         move = Move(1, 4)
         move(self.vials)
+
+    def _inputValues(self):
+        range_ = range(6)
+        origin = self._inputValue(range_, "input origin value")
+        destination = self._inputValue(range_, "input destination value")
+        return origin, destination
+
+    def _inputValue(self, range_, message):
+        value = None
+        while value in range_:
+            message += f" in range ({min(range_)}, {max(range_)}): "
+            value = input(message)
+        return value
 
 if __name__ == "__main__":
     colors = 'bgkyyykkgbbgbykg'
