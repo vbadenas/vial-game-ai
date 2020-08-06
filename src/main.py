@@ -52,7 +52,7 @@ class BallSortGame:
         colors = [vial.getColorList() for vial in self.vials]
         complete = []
         for colorList in colors:
-            check = len(colorList) in [0, 4] and len(set(colorList)) == 1
+            check = (len(colorList) == 4 and len(set(colorList)) == 1) or len(colorList) == 0
             complete.append(check)
         return all(complete)
 
