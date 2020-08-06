@@ -4,7 +4,7 @@ from objects import Vial
 from visuals import MainScreen
 from pprint import pprint
 
-class Main:
+class BallSortGame:
     def __init__(self, colors):
         self._initVials(colors)
 
@@ -57,8 +57,8 @@ class Main:
 
 if __name__ == "__main__":
     colors = 'bgkyyykkgbbgbykg'
-    main = Main(colors)
-    main.displayColors()
-    while not main.checkForCompletion():
-        main()
-        main.displayColors()
+    ballSortGame = BallSortGame(colors)
+    ballSortGame.displayColors()
+    while not ballSortGame.checkForCompletion():
+        ballSortGame.performMove()
+        ballSortGame.displayColors()
