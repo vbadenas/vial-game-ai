@@ -34,9 +34,12 @@ class BallSortGame:
 
     def _inputValues(self):
         range_ = range(6)
-        origin = self._inputValue(range_, "input origin value")
-        destination = self._inputValue(range_, "input destination value")
-        return origin, destination
+        message = f"next move in range ({min(range_)}, {max(range_)}): "
+        values = []
+        while len(values)!=2 or all(value not in range_ for value in values):
+            values = input(message)
+            values = list(map(int, values.split(',')))
+        return values
 
     def _inputValue(self, range_, message):
         value = None
