@@ -12,27 +12,53 @@ class Main:
         if len(colors) % 4 != 0:
             raise ValueError("colors must be a multiple of 4")
         numberOfVials = len(colors) // 4 + 2
-        print(f"{numberOfVials} will be used in this level")
-        self.vials = [None]*numberOfVials
-        for i in range(numberOfVials - 2):
-            self.vials[i] = Vial(colors[4*i:4*i+4], (100*(i+1), 50))
-        self.vials[-2] = Vial([], (100*(numberOfVials-1), 50))
-        self.vials[-1] = Vial([], (100*(numberOfVials), 50))
+        self.vials = [Vial(colors[4*i:4*i+4], (100*(i+1), 50)) for i in range(numberOfVials - 2)]
+        self.vials.append(Vial([], (100*(numberOfVials-1), 50)))
+        self.vials.append(Vial([], (100*(numberOfVials), 50)))
 
     def __call__(self, *args, **kwargs):
-        self.run(*args, **kwargs)
+        self.performMove(*args, **kwargs)
 
     def showVials(self):
         for vial in self.vials:
             print(vial)
 
-    def run(self):
-        move = Move(1, 4)
+    def displayColors(self):
+        colors = [vial.getColorList() for vial in self.vials]
+        print('\n'.join([f"{i}:\t{vial}" for i, vial in enumerate(map(str, colors))]))
+
+    def performMove(self):
+        origin, destination = self._inputValues()
+        move = Move(origin, destination)
         move(self.vials)
+
+    def _inputValues(self):
+        range_ = range(6)
+        origin = self._inputValue(range_, "input origin value")
+        destination = self._inputValue(range_, "input destination value")
+        return origin, destination
+
+    def _inputValue(self, range_, message):
+        value = None
+        message += f" in range ({min(range_)}, {max(range_)}): "
+        while value not in range_:
+            value = int(input(message))
+        return value
+
+    def checkForCompletion(self):
+        colors = [vial.getColorList() for vial in self.vials]
+        complete = []
+        for colorList in colors:
+            if len(colorList) == 4:
+                complete.append(all(color == colorList[0] for color in colorList))
+            else:
+                complete.append(False)
+        return all(complete)
 
 if __name__ == "__main__":
     colors = 'bgkyyykkgbbgbykg'
     main = Main(colors)
-    main.showVials()
-    main()
-    main.showVials()
+    main.displayColors()
+    while not main.checkForCompletion():
+        main()
+        main.displayColors()
