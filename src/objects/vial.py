@@ -49,3 +49,6 @@ class Vial:
 
     def __len__(self):
         return len(self.balls)
+
+    def getColorList(self):
+        return [ball.color for ball in self.balls]
