@@ -3,6 +3,7 @@ from actions import Move
 from objects import Vial
 from visuals import MainScreen
 from pprint import pprint
+from utils.random import generateRandomColorSequence
 
 class BallSortGame:
     def __init__(self, colors):
@@ -23,7 +24,7 @@ class BallSortGame:
         for vial in self.vials:
             print(vial)
 
-    def displayColors(self):
+    def displayColorsInTerminal(self):
         colors = [vial.getColorList() for vial in self.vials]
         print('\n'.join([f"{i}:\t{vial}" for i, vial in enumerate(map(str, colors))]))
 
@@ -57,9 +58,10 @@ class BallSortGame:
         return all(complete)
 
 if __name__ == "__main__":
-    colors = 'bgkyyykkgbbgbykg'
+    colors = generateRandomColorSequence(4)
     ballSortGame = BallSortGame(colors)
-    ballSortGame.displayColors()
+    ballSortGame.displayColorsInTerminal()
     while not ballSortGame.checkForCompletion():
         ballSortGame.performMove()
-        ballSortGame.displayColors()
+        ballSortGame.displayColorsInTerminal()
+    print("Congratulations, you solved the game")
