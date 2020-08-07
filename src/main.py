@@ -3,7 +3,7 @@ from actions import Move
 from objects import Vial
 from visuals import MainScreen
 from pprint import pprint
-from utils.random import generateRandomColorSequence
+from utils.data import generateRandomColorSequence
 
 class BallSortGame:
     def __init__(self, colors):
