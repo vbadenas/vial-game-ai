@@ -1,5 +1,5 @@
 import random
-from timeUtils import TimeStatisticsCalculator
+from utils.timeUtils import TimeStatisticsCalculator
 
 colorsMap = {
     0: "k",
