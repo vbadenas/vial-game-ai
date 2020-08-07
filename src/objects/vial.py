@@ -38,11 +38,13 @@ class Vial:
     def __repr__(self):
         return str(self.__dict__)
 
-    def addBall(self, ballColor):
+    def addBall(self, ball):
         if len(self.balls) > 3:
             return
         else:
-            self.balls.append(ballColor)
+            newPosition = (self.position[0]+25, 50*(4-len(self.balls))+25)
+            ball.updatePosition(newPosition)
+            self.balls.append(ball)
 
     def popLastBall(self):
         if len(self.balls) > 0:
