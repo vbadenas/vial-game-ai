@@ -19,9 +19,10 @@ def generateRandomColorSequence(numberOfColors):
     return colors
 
 if __name__ == "__main__":
-    import time
     numberOfExecutions = int(1e4)
+
     tsc = TimeStatisticsCalculator()
     for i in range(numberOfExecutions):
-        tsc(generateRandomColorSequence, 5)
+        ret = tsc(generateRandomColorSequence, 5)
     tsc.report()
+    print(ret)
