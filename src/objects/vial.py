@@ -1,3 +1,4 @@
+import pygame
 from objects.ball import Ball
 from collections import Iterable
 
@@ -9,13 +10,17 @@ class Vial:
         self.size = (50, 200)
         self.createBalls(ballColors)
 
-    def paint(self):
-        pass
+    def paint(self, screen, rgbcolors):
+        rect = self.position + self.size
+        pygame.draw.rect(screen, rgbcolors['k'], rect, 1)
+        for ball in self.balls:
+            ball.paint(screen, rgbcolors)
     
     def createBalls(self, ballColors):
         self.balls = []
         for i, color in enumerate(ballColors):
-            self.balls.append(Ball(color, (self.position[0], 50*(i+1))))
+            position = (self.position[0]+25, 50*(4-i)+25)
+            self.balls.append(Ball(color, position, 24))
 
     def __str__(self):
         msg = 'Vial(\t'
