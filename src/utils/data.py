@@ -7,7 +7,8 @@ colorsMap = {
     2: "r",
     3: "y",
     4: "b",
-    5: "p"
+    5: "g",
+    6: "p",
 }
 
 def generateRandomColorSequence(numberOfColors):
