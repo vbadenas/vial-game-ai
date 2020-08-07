@@ -8,14 +8,16 @@ from utils.data import generateRandomColorSequence
 class BallSortGame:
     def __init__(self, colors):
         self._initVials(colors)
+        self.screen = MainScreen(((len(self.vials)*100 + 50), 300))
+        self.running = True
 
     def _initVials(self, colors):
         if len(colors) % 4 != 0:
             raise ValueError("colors must be a multiple of 4")
         numberOfVials = len(colors) // 4 + 2
-        self.vials = [Vial(colors[4*i:4*i+4], (100*(i+1), 50)) for i in range(numberOfVials - 2)]
-        self.vials.append(Vial([], (100*(numberOfVials-1), 50)))
-        self.vials.append(Vial([], (100*(numberOfVials), 50)))
+        self.vials = [Vial(colors[4*i:4*i+4], (100*i+50, 50)) for i in range(numberOfVials - 2)]
+        self.vials.append(Vial([], (100*(numberOfVials-2) + 50, 50)))
+        self.vials.append(Vial([], (100*(numberOfVials-1) + 50, 50)))
 
     def __call__(self, *args, **kwargs):
         self.performMove(*args, **kwargs)
@@ -30,6 +32,8 @@ class BallSortGame:
 
     def performMove(self):
         origin, destination = self._inputValues()
+        if origin is None and destination is None:
+            return
         move = Move(origin, destination)
         move(self.vials)
 
@@ -39,6 +43,9 @@ class BallSortGame:
         values = []
         while len(values)!=2 or all(value not in range_ for value in values):
             values = input(message)
+            if values.lower() == "exit":
+                self.exit()
+                return None, None
             values = list(map(int, values.split(',')))
         return values
 
@@ -57,11 +64,20 @@ class BallSortGame:
             complete.append(check)
         return all(complete)
 
+    def paint(self):
+        self.screen.paint(self.vials)
+
+    def exit(self):
+        self.screen.exit()
+        self.running = False
+
 if __name__ == "__main__":
     colors = generateRandomColorSequence(4)
     ballSortGame = BallSortGame(colors)
-    ballSortGame.displayColorsInTerminal()
-    while not ballSortGame.checkForCompletion():
-        ballSortGame.performMove()
+    while not ballSortGame.checkForCompletion() and ballSortGame.running:
+        ballSortGame.showVials()
+        ballSortGame.paint()
         ballSortGame.displayColorsInTerminal()
-    print("Congratulations, you solved the game")
+        ballSortGame.performMove()
+    if ballSortGame.checkForCompletion():
+        print("Congratulations, you solved the game")
