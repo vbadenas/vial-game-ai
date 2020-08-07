@@ -42,6 +42,7 @@ class TimeStatisticsCalculator:
         self.functionName = function.__name__
         ret, delta = timer()(function)(*args, **kwargs)
         self.times.append(delta)
+        return ret
 
     def report(self):
         self.times = list(map(lambda v: 1e6*v, self.times))
