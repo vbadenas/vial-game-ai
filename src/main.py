@@ -74,10 +74,14 @@ class BallSortGame:
 if __name__ == "__main__":
     colors = generateRandomColorSequence(4)
     ballSortGame = BallSortGame(colors)
+    ballSortGame.paint()
     while not ballSortGame.checkForCompletion() and ballSortGame.running:
         ballSortGame.showVials()
-        ballSortGame.paint()
         ballSortGame.displayColorsInTerminal()
+        ballSortGame.paint()
         ballSortGame.performMove()
+        ballSortGame.paint()
     if ballSortGame.checkForCompletion():
         print("Congratulations, you solved the game")
+        while ballSortGame.screen.running:
+            ballSortGame.paint()

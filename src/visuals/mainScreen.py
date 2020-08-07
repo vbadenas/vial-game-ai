@@ -25,6 +25,7 @@ class MainScreen:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.exit()
+                return
         self.screen.fill(self.rgbColors['w'])
         for vial in vialsList:
             self.__drawVial(vial)
